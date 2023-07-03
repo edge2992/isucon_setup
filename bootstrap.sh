@@ -49,7 +49,7 @@ usage() {
   echo $YELLOW
   cat <<\EOF
 Commands:
-  download (download tools by shellscript. alp would be installed.)
+  download (download tools by shellscript. alp and ab would be installed.)
   quit
 EOF
   echo $NORMAL
@@ -80,6 +80,28 @@ alp_download() {
   fi
 }
 
+apt_install() {
+  if [ "$(uname -s)" == "Linux" ]; then
+    if [ -n "$(command -v apt)" ]; then
+
+      echo "${BOLD}Updating apt...$NORMAL"
+      sudo apt update
+      echo "${BOLD}Installing necessary packages for nvim plugins...$NORMAL"
+      sudo apt install -y apache2-utils
+
+      if [ $? = 0 ]; then
+        echo "${GREEN}Successfully installed necessary packages. ✔︎$NORMAL"
+      else
+        echo "${RED}An unexpected error occurred when trying to install packages.$NORMAL"
+      fi
+    else
+      echo "${RED}This command requires apt package manager, which is not available on this system.$NORMAL"
+    fi
+  else
+    echo "${RED}This command is intended to be executed only on Linux.$NORMAL"
+  fi
+}
+
 download() {
   # check if arch is arm64
   check_arch
@@ -93,6 +115,9 @@ download() {
   else
     echo "${BOLD}alp already exists.$NORMAL"
   fi
+
+  # apt install (ab)
+  apt_install
 }
 
 
