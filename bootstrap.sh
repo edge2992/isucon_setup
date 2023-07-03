@@ -3,7 +3,7 @@
 
 
 # tool_download_path
-ALP_SOURCE_URL="https://github.com/tkuchiki/alp/releases/download/v1.0.12/alp_linux_arm64.zip"
+ALP_SOURCE_URL="https://github.com/tkuchiki/alp/releases/download/v1.0.12/alp_linux_amd64.zip"
 
 # tool install path
 
@@ -57,10 +57,10 @@ EOF
 
 check_arch() {
   if [ "$(uname -m)" = "arm64" ]; then
-    echo "${GREEN}arm64 detected.$NORMAL"
-  else
-    echo "${RED}arm64 not detected. This script is only runnable in arm64.$NORMAL"
+    echo "${RED}arm64 detected. This script is only runnable on x86 or amd64 architecture.$NORMAL"
     exit 1
+  else
+    echo "${GREEN}arm64 not detected.$NORMAL"
   fi
 }
 
